@@ -1,0 +1,61 @@
+#title {
+    text-align: center;
+    margin-top: 40px;
+}
+
+#explanation {
+    text-align: center;
+    font-size: 1.4rem;
+    margin: 20px 0 30px 0;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(6, 250px);
+    grid-template-rows: 250px;
+    grid-gap: 20px;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 15%);
+}
+
+#Massena {
+    background-color: #EA3324;
+}
+
+#Canton {
+    background-color: #775D17;
+}
+
+#Ogdensburg {
+    background-color: #3F5629;
+}
+
+#Watertown {
+    background-color: #FFFF54;
+}
+
+#Madrid {
+    background-color: #102E89;
+}
+
+#Waddington {
+    background-color: #68349A;
+}
+
+#Massena:hover, #Canton:hover, #Ogdensburg:hover, #Watertown:hover, #Madrid:hover, #Waddington:hover {
+    border: 3px solid white;
+    outline: 4px solid black;
+}
+
+#arrival {
+    margin-top: 400px;
+    margin-left: 200px;
+    height: 180px;
+    text-align: left;
+    font-size: 1.6rem;
+}
+
+th {
+    width: 230px;
+}
