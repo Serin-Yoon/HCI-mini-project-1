@@ -14,9 +14,44 @@
     grid-template-columns: repeat(6, 250px);
     grid-template-rows: 250px;
     grid-gap: 20px;
-    position: fixed;
+    position: relative;
     left: 50%;
     transform: translate(-50%, 15%);
+    float: left;
+    margin-bottom: 20px;
+}
+
+.container-current-bus {
+    margin-left: 600px;
+}
+
+.current-bus {
+    height: 250px;
+    width: 250px;
+    pointer-events: none;
+}
+
+
+.block {
+    display: block;
+}
+
+.row-container {
+    float: left;
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+.container {
+    padding: 20px;
+    float: left;
+    width: 90%;
+}
+
+.container-child {
+    display: inline-block;
+    padding: 20px;
+    vertical-align: top;
 }
 
 #Massena {
@@ -49,7 +84,7 @@
 }
 
 #arrival {
-    margin-top: 400px;
+    margin-top: 0px;
     margin-left: 200px;
     height: 180px;
     text-align: left;

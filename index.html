@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Potsdam Transportation Company Bus Schedule Manager</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    
 </head>
 <body>
     <h1 id="title">Potsdam Transportation Company Bus Schedule Manager</h1>
@@ -12,29 +13,109 @@
         Arrivals will be broadcast over headsets or shown at the bottom right.
     </div>
 
-    <div class="buttons">
-        <div id="Massena"></div>
-        <div id="Canton"></div>
-        <div id="Ogdensburg"></div>
-        <div id="Watertown"></div>
-        <div id="Madrid"></div>
-        <div id="Waddington"></div>
+    <div class="row-container">
+        <div class="buttons">
+            <div id="Massena" onclick="endTimer(this)"></div>
+            <div id="Canton" onclick="endTimer(this)"></div>
+            <div id="Ogdensburg" onclick="endTimer(this)"></div>
+            <div id="Watertown" onclick="endTimer(this)"></div>
+            <div id="Madrid" onclick="endTimer(this)"></div>
+            <div id="Waddington" onclick="endTimer(this)"></div>
+        </div>
     </div>
 
-    <table id="arrival">
-        <tr>
-            <th>Expect arrival:</th>
-            <th>~~</th>
-        </tr>
-        <tr>
-            <th>Actual arrival:</th>
-            <th>~~</th>
-        </tr>
-        <tr>
-            <th>Delay:</th>
-            <th>~~</th>
-        </tr>
-    </table>
+    <div class="container">
+        <div class="container-child">
+            
+            <table id="arrival">
+                <tr>
+                    <th>Expect arrival:</th>
+                    <th>~~</th>
+                </tr>
+                <tr>
+                    <th>Actual arrival:</th>
+                    <th>~~</th>
+                </tr>
+                <tr>
+                    <th>Delay:</th>
+                    <th>~~</th>
+                </tr>
+            </table>
+            
+        </div>
+        <div class="container-child">
+            <div class="container-current-bus">
+                <h3 style="text-align: center;">Current bus at stop</h3>
+                <div class="current-bus" id="Massena"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var startTime;
+        var endTime;
+        var elapsedTime;
+        var rounds = 0;
+        var maxRounds = 10;
+        var done = false;
+        var results = "";
+
+        var routes = ["Massena", "Canton", "Ogdensburg", "Watertown", "Madrid", "Waddington"]
+
+        var currentBusDiv = document.getElementsByClassName("current-bus")[0]
+
+        function startTimer() {
+            startTime = Date.now();
+        }
+
+        function download(text, filename) {
+            var blob = new Blob([text], {type: "text/plain"});
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            a.click();
+        }
+
+        function endTimer(el) {
+            if (!done) {
+                endTime = Date.now();
+                elapsedTime = endTime - startTime;
+
+                if (el.id === currentBusDiv.id) {
+                    console.log(elapsedTime + ", true");
+                    results += (elapsedTime + ", true\n");
+                } else {
+                    console.log(elapsedTime + ", false");
+                    results += (elapsedTime + ", false\n");
+                }
+
+                rounds++;
+            }
+            
+            if (rounds < maxRounds) {
+                randomBus()
+                startTimer()
+            } else {
+                done = true;
+                alert("The test is complete. You will be prompted to download a text file containing the results.")
+                download(results, "data.txt");
+            }
+            
+            
+        }
+
+        function randomBus() {
+            r = Math.floor(Math.random() * routes.length);
+            newRoute = routes[r]
+            this.currentBusDiv.id = newRoute
+        }
+
+        
+
+        randomBus()
+        startTimer()
+    </script>
 
 </body>
 </html>
