@@ -3,50 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Potsdam Transportation Company Bus Schedule Manager</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
     
 </head>
 <body>
-    <h1 id="title">Potsdam Transportation Company Bus Schedule Manager</h1>
-    <div id="explanation">
-        Operators: Press route icon associated with the bus that has arrived at the stop to record route delays.
-        Arrivals will be broadcast over headsets or shown at the bottom right.
-    </div>
-
-    <div class="row-container">
-        <div class="buttons">
-            <div id="Massena" onclick="endTimer(this)"></div>
-            <div id="Canton" onclick="endTimer(this)"></div>
-            <div id="Ogdensburg" onclick="endTimer(this)"></div>
-            <div id="Watertown" onclick="endTimer(this)"></div>
-            <div id="Madrid" onclick="endTimer(this)"></div>
-            <div id="Waddington" onclick="endTimer(this)"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col center-block text-center">
+                <h1 id="title"><b>Potsdam Transportation Company Bus Schedule Manager</b></h1>
+                <div id="explanation">
+                    Operators: Press route icon associated with the bus that has arrived at the stop to record route delays.
+                    Arrivals will be broadcast over headsets or shown at the bottom right.
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="container-child">
-            
-            <table id="arrival">
-                <tr>
-                    <th>Expect arrival:</th>
-                    <th>~~</th>
-                </tr>
-                <tr>
-                    <th>Actual arrival:</th>
-                    <th>~~</th>
-                </tr>
-                <tr>
-                    <th>Delay:</th>
-                    <th>~~</th>
-                </tr>
-            </table>
-            
+    <div class="container-fluid">
+        <div class="row">
+            <div class="buttons">
+                <div id="Massena" onclick="endTimer(this)"></div>
+                <div id="Canton" onclick="endTimer(this)"></div>
+                <div id="Ogdensburg" onclick="endTimer(this)"></div>
+                <div id="Watertown" onclick="endTimer(this)"></div>
+                <div id="Madrid" onclick="endTimer(this)"></div>
+                <div id="Waddington" onclick="endTimer(this)"></div>
+            </div>
         </div>
-        <div class="container-child">
-            <div class="container-current-bus">
-                <h3 style="text-align: center;">Current bus at stop</h3>
-                <div class="current-bus" id="Massena"></div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col col-8">
+                <table id="arrival">
+                    <tr>
+                        <th>Click to start the test:</th>
+                        <th><button onclick="startTimer()">Start</button></th>
+                    </tr>
+                    <tr>
+                        <th>Current round:</th>
+                        <th id="round-counter">~~</th>
+                    </tr>
+                    <tr>
+                        <th>Total rounds:</th>
+                        <th id="total-rounds">~~</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col">
+                <div class="container-current-bus">
+                    <h4 style="text-align: center;">Current bus at stop</h4>
+                    <div class="current-bus" id="Massena"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -63,9 +73,13 @@
         var routes = ["Massena", "Canton", "Ogdensburg", "Watertown", "Madrid", "Waddington"]
 
         var currentBusDiv = document.getElementsByClassName("current-bus")[0]
+        var roundConter = document.getElementById("round-counter");
+        var totalRoundCounter = document.getElementById("total-rounds");
 
         function startTimer() {
             startTime = Date.now();
+            randomBus()
+            this.roundConter.innerHTML = (rounds + 1);
         }
 
         function download(text, filename) {
@@ -94,7 +108,6 @@
             }
             
             if (rounds < maxRounds) {
-                randomBus()
                 startTimer()
             } else {
                 done = true;
@@ -111,10 +124,11 @@
             this.currentBusDiv.id = newRoute
         }
 
-        
+        this.currentBusDiv.id = "NotStarted"
+        this.totalRoundCounter.innerHTML = maxRounds;
 
-        randomBus()
-        startTimer()
+        //randomBus()
+        //startTimer()
     </script>
 
 </body>
