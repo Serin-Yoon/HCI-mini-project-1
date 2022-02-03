@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Potsdam Transportation Company Bus Schedule Manager</title>
+    <title>Color Test w/ original colors</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style.css">
     
@@ -13,8 +13,7 @@
             <div class="col center-block text-center">
                 <h1 id="title"><b>Potsdam Transportation Company Bus Schedule Manager</b></h1>
                 <div id="explanation">
-                    Operators: Press route icon associated with the bus that has arrived at the stop to record route delays.
-                    Arrivals will be broadcast over headsets or shown at the bottom right.
+                    Press start to begin. If you run out of time before the test is finished, press download to download existing data.
                 </div>
             </div>
         </div>
@@ -50,6 +49,10 @@
                         <th>Total rounds:</th>
                         <th id="total-rounds"></th>
                     </tr>
+                    <tr>
+                        <th>Download data:</th>
+                        <th><button id="download-button" onclick="download('data.csv')">Download</button></th>
+                    </tr>
                 </table>
             </div>
             <div class="col">
@@ -66,7 +69,7 @@
         var endTime;
         var elapsedTime;
         var rounds = 0;
-        var maxRounds = 400;
+        var maxRounds = 300;
         var done = false;
         var results = [];
 
@@ -114,7 +117,23 @@
             startTimer();
         }
 
-        function download(csv, filename) {
+        function download(filename) {
+            var csv = [];
+            var row = [];
+
+            row.push("1", "2", "3", "4", "5", "6", "answer", "selected", "duration", "is correct");
+            csv.push(row.join(","));
+
+            results.forEach((e1) => {
+                row = [];
+                e1.forEach((e2) => {
+                    row.push(e2)
+                })
+                csv.push(row.join(","));
+            });
+
+            csv = csv.join("\n")
+
             var blob = new Blob([csv], {type: "text/csv"});
             var url = window.URL.createObjectURL(blob);
             var a = document.createElement("a");
@@ -153,6 +172,7 @@
                 done = true;
                 alert("The test is complete. You will be prompted to download a text file containing the results.")
 
+                /*
                 var csv = [];
                 var row = [];
 
@@ -166,8 +186,9 @@
                     })
                     csv.push(row.join(","));
                 });
+                */
 
-                download(csv.join("\n"), "data.csv");
+                download("data.csv");
             }
         }
 
