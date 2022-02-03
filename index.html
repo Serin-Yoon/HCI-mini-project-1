@@ -39,16 +39,16 @@
             <div class="col col-8">
                 <table id="arrival">
                     <tr>
-                        <th>Click to start the test:</th>
+                        <th>Click to start the test</th>
                         <th><button id="start-button" onclick="startTest()">Start</button></th>
                     </tr>
                     <tr>
                         <th>Current round:</th>
-                        <th id="round-counter">~~</th>
+                        <th id="round-counter">0</th>
                     </tr>
                     <tr>
                         <th>Total rounds:</th>
-                        <th id="total-rounds">~~</th>
+                        <th id="total-rounds"></th>
                     </tr>
                 </table>
             </div>
@@ -68,10 +68,10 @@
         var rounds = 0;
         var maxRounds = 400;
         var done = false;
-        var results = "";
+        var results = [];
 
-        var routes = ["Massena", "Canton", "Ogdensburg", "Watertown", "Madrid", "Waddington"];
-        var randomizedRoutes = ["Massena", "Canton", "Ogdensburg", "Watertown", "Madrid", "Waddington"];
+        var routes = ["Red", "Brown", "Green", "Yellow", "Blue", "Purple"];
+        var randomizedRoutes = ["Red", "Brown", "Green", "Yellow", "Blue", "Purple"];
 
         var currentBusDiv = document.getElementsByClassName("current-bus")[0];
         var colorBoxDivs = document.getElementsByClassName("color-box");
@@ -114,8 +114,8 @@
             startTimer();
         }
 
-        function download(text, filename) {
-            var blob = new Blob([text], {type: "text/plain"});
+        function download(csv, filename) {
+            var blob = new Blob([csv], {type: "text/csv"});
             var url = window.URL.createObjectURL(blob);
             var a = document.createElement("a");
             a.href = url;
@@ -125,15 +125,23 @@
 
         function endTimer(el) {
             if (!done) {
+                var answerColor = currentBusDiv.id;
+                var selectedColor = el.id;
+                var colorList = [];
+
                 endTime = Date.now();
                 elapsedTime = endTime - startTime;
 
-                if (el.id === currentBusDiv.id) {
-                    console.log(elapsedTime + ", true");
-                    results += (elapsedTime + ", true\n");
+                el.parentNode.childNodes.forEach((e) => {
+                    if (e.id !== undefined) colorList.push(e.id);
+                })
+
+                if (answerColor === selectedColor) {
+                    console.log([colorList, answerColor, selectedColor, elapsedTime, "true"]);
+                    results.push([colorList, answerColor, selectedColor, elapsedTime, "true"]);
                 } else {
-                    console.log(elapsedTime + ", false");
-                    results += (elapsedTime + ", false\n");
+                    console.log([colorList, answerColor, selectedColor, elapsedTime, "false"]);
+                    results.push([colorList, answerColor, selectedColor, elapsedTime, "false"]);
                 }
 
                 rounds++;
@@ -144,7 +152,22 @@
             } else {
                 done = true;
                 alert("The test is complete. You will be prompted to download a text file containing the results.")
-                download(results, "data.txt");
+
+                var csv = [];
+                var row = [];
+
+                row.push("1", "2", "3", "4", "5", "6", "answer", "selected", "duration", "is correct");
+                csv.push(row.join(","));
+
+                results.forEach((e1) => {
+                    row = [];
+                    e1.forEach((e2) => {
+                        row.push(e2)
+                    })
+                    csv.push(row.join(","));
+                });
+
+                download(csv.join("\n"), "data.csv");
             }
         }
 

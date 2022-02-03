@@ -49,27 +49,27 @@
     border: dashed blue 3px;
 }
 
-#Massena {
+#Red {
     background-color: #EA3324;
 }
 
-#Canton {
+#Brown {
     background-color: #775D17;
 }
 
-#Ogdensburg {
+#Green {
     background-color: #3F5629;
 }
 
-#Watertown {
+#Yellow {
     background-color: #FFFF54;
 }
 
-#Madrid {
+#Blue {
     background-color: #102E89;
 }
 
-#Waddington {
+#Purple {
     background-color: #68349A;
 }
 
@@ -77,7 +77,7 @@
     background-color: black;
 }
 
-#Massena:hover, #Canton:hover, #Ogdensburg:hover, #Watertown:hover, #Madrid:hover, #Waddington:hover {
+#Red:hover, #Brown:hover, #Green:hover, #Yellow:hover, #Blue:hover, #Purple:hover {
     border: 3px solid white;
     outline: 4px solid black;
 }
